@@ -58,6 +58,7 @@ function changeSquareColor(){
 			if(this.style.backgroundColor === answerColor){
 				message.textContent = "Good Job!";
 				winnerColor();
+				resetButton.textContent = "Play Again?";
 			}
 			else{
 				this.style.backgroundColor = "#232323";
@@ -87,6 +88,7 @@ function reset(){
 	changeSquareColor();
 	document.querySelector("h1").style.background = "steelblue";
 	message.textContent = "Welcome"
+	resetButton.textContent = "New Colors"
 }
 
 function blockSquare(num){
