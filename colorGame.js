@@ -8,17 +8,24 @@ var message = document.querySelector("div span");
 var resetButton = document.querySelector("button");
 var modes = document.querySelectorAll(".mode");
 
-resetButton.addEventListener("click", function(){
-	reset();
-})
+function setUp(){
+	addListenters();
+	changeSquareColor();
+}
 
-for (var i = 0; i < 3; i++) {
-	modes[i].addEventListener("click", function(){
-		difficulty = corr_diff(this);
+function addListenters(){
+	resetButton.addEventListener("click", function(){
 		reset();
-		unselected();
-		this.classList.add("selected");
 	})
+
+	for (var i = 0; i < 3; i++) {
+		modes[i].addEventListener("click", function(){
+			difficulty = corr_diff(this);
+			reset();
+			unselected();
+			this.classList.add("selected");
+		})
+	}
 }
 
 // easyButton.addEventListener("click", function(){
@@ -66,7 +73,7 @@ function unselected(){
 function changeSquareColor(){
 	for (var i = 0; i < difficulty; i++) {
 		var temp = rgbToString(colors[i][0], colors[i][1], colors[i][2])
-		console.log(i);
+		// console.log(i);
 		squares[i].style.background = temp;
 		squares[i].addEventListener("click", function(){
 			if(this.style.background === answerColor){
@@ -115,13 +122,13 @@ function blockSquare(num){
 }
 
 function corr_diff(obj){
-	if(obj.textContent = "Easy"){
+	if(obj.textContent === "Easy"){
 		return 3;
-	}else if(obj.textContent = "Hard"){
+	}else if(obj.textContent === "Hard"){
 		return 6;
-	}else{
+	}else if(obj.textContent === "Expert"){
 		return 9;
 	}
 }
 
-changeSquareColor();
+setUp();
