@@ -5,39 +5,45 @@ var target = Math.floor(Math.random() * difficulty);
 var colors = colorGenerator();
 var answerColor = rgbToString(colors[target][0], colors[target][1], colors[target][2]);
 var message = document.querySelector("div span");
-var buttons = document.querySelectorAll("button");
-var resetButton = buttons[0];
-var easyButton = buttons[1];
-var hardButton = buttons[2];
-var expertButton = buttons[3];
+var resetButton = document.querySelector("button");
+var modes = document.querySelectorAll(".mode");
 
 resetButton.addEventListener("click", function(){
 	reset();
 })
 
-easyButton.addEventListener("click", function(){
-	difficulty = 3;
-	reset();
-	this.classList.add("selected");
-	hardButton.classList.remove("selected");
-	expertButton.classList.remove("selected");
-})
+for (var i = 0; i < 3; i++) {
+	modes[i].addEventListener("click", function(){
+		difficulty = corr_diff(this);
+		reset();
+		unselected();
+		this.classList.add("selected");
+	})
+}
 
-hardButton.addEventListener("click", function(){
-	difficulty = 6;
-	reset();
-	this.classList.add("selected");
-	easyButton.classList.remove("selected");
-	expertButton.classList.remove("selected");
-})
+// easyButton.addEventListener("click", function(){
+// 	difficulty = 3;
+// 	reset();
+// 	this.classList.add("selected");
+// 	hardButton.classList.remove("selected");
+// 	expertButton.classList.remove("selected");
+// })
 
-expertButton.addEventListener("click", function(){
-	difficulty = 9;
-	reset();
-	this.classList.add("selected");
-	hardButton.classList.remove("selected");
-	easyButton.classList.remove("selected");
-})
+// hardButton.addEventListener("click", function(){
+// 	difficulty = 6;
+// 	reset();
+// 	this.classList.add("selected");
+// 	easyButton.classList.remove("selected");
+// 	expertButton.classList.remove("selected");
+// })
+
+// expertButton.addEventListener("click", function(){
+// 	difficulty = 9;
+// 	reset();
+// 	this.classList.add("selected");
+// 	hardButton.classList.remove("selected");
+// 	easyButton.classList.remove("selected");
+// })
 
 function colorGenerator(){
 	result = [];
@@ -50,12 +56,20 @@ function colorGenerator(){
 	}
 	return result;
 }
+
+function unselected(){
+	for (var i = 0; i < 3; i++) {
+		modes[i].classList.remove("selected");
+	}
+}
+
 function changeSquareColor(){
 	for (var i = 0; i < difficulty; i++) {
 		var temp = rgbToString(colors[i][0], colors[i][1], colors[i][2])
-		squares[i].style.backgroundColor = temp;
+		console.log(i);
+		squares[i].style.background = temp;
 		squares[i].addEventListener("click", function(){
-			if(this.style.backgroundColor === answerColor){
+			if(this.style.background === answerColor){
 				message.textContent = "Good Job!";
 				winnerColor();
 				resetButton.textContent = "Play Again?";
@@ -97,6 +111,16 @@ function blockSquare(num){
 	}
 	for (var i = 0; i < num ; i++) {
 		squares[8-i].style.display = "none";
+	}
+}
+
+function corr_diff(obj){
+	if(obj.textContent = "Easy"){
+		return 3;
+	}else if(obj.textContent = "Hard"){
+		return 6;
+	}else{
+		return 9;
 	}
 }
 
